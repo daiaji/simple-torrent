@@ -2,7 +2,9 @@
 # STEP 1 build executable binary
 ############################
 FROM alpine AS builder
-RUN apk update \
+ARG WGETPROXY
+RUN sed -i 's#http://dl-cdn.alpinelinux.org#https://mirrors.aliyun.com#g' /etc/apk/repositories \
+    && apk update \
     && apk add --no-cache wget bash ca-certificates \
     && wget $WGETPROXY -qO- https://raw.githubusercontent.com/daiaji/simple-torrent/master/scripts/qi.sh | bash
 
